@@ -1,0 +1,5 @@
+Write this in a simple and concise step-by-step approach (e.g., Step 1):
+
+Simplify and optimize this code:
+
+Make this code clean, readable and maintainable:
