@@ -2,9 +2,14 @@
 
 using namespace std;
 
-int main()
+vector<vector<int>> fourSum(vector<int>, int t)
 {
     
+}
+
+int main()
+{
+
 
     return 0;
 }
