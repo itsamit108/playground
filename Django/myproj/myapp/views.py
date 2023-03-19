@@ -4,7 +4,8 @@ from django.shortcuts import render, HttpResponse
 
 
 def index(request):
-    return render(request, "index.html")
+    context = {"variable": "This is a string"}
+    return render(request, "index.html", context)
 
 
 def about(request):
