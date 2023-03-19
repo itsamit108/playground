@@ -4,17 +4,16 @@ from django.shortcuts import render, HttpResponse
 
 
 def index(request):
-    context = {"variable1": "This is a string"}
-    return render(request, "index.html", context)
+    return render(request, "index.html")
 
 
 def about(request):
-    return HttpResponse("About Page")
+    return render(request, "about.html")
 
 
 def contact(request):
-    return HttpResponse("Contact Page")
+    return render(request, "contact.html")
 
 
 def services(request):
-    return HttpResponse("Services Page")
+    return render(request, "services.html")
