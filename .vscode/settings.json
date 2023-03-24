@@ -1,4 +1,0 @@
-{
-    "gitdoc.enabled": true,
-    "python.formatting.provider": "black"
-}
