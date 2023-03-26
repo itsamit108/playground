@@ -1,4 +1,4 @@
-Write this in a simple and concise step-by-step approach (e.g., Step 1):
+Write solutions in bullet points using minimum words:
 
 Simplify and optimize this code:
 
