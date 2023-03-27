@@ -1,12 +1,16 @@
-class MyClass {
-    void Greet() {
-        System.out.println("Hello");
+class Demo{
+    int num;
+    Demo(int num){
+        this.num=num;
+    }
+    int getNum(){
+        return num;
     }
 }
 
-class Main {
-    public static void main(String[] args) {
-        MyClass obj1 = new MyClass();
-        obj1.Greet();
+class Main{
+    public static void main(String [] args){
+        Demo obj1=new Demo(10);
+        
     }
 }
