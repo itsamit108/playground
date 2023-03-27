@@ -3,3 +3,11 @@ Write solutions in bullet points using minimum words:
 Simplify and optimize this code:
 
 Make this code clean, readable and maintainable:
+
+Create a detailed and in-depth roadmap, including topics and subtopics, for ...
+
+Create short revision notes on hashing in Data Structures and Algorithms using C++ with examples, explained in simple terms.
+
+Do's and don'ts
+
+Use cases
