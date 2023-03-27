@@ -8,6 +8,6 @@ Create a detailed and in-depth road map, including topics and subtopics, for ...
 
 Create short revision notes on hashing in Data Structures and Algorithms using C++ with examples, explained in simple terms.
 
-Do's and don'ts
-
 Use cases
+
+Do's and don'ts
