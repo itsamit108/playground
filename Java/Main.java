@@ -1,18 +1,20 @@
 class Demo {
-    int num;
-
-    Demo(int num) {
-        this.num = num;
+    void join(int a, int b){
+        System.out.println(a+b);
     }
-
-    int getNum() {
-        return num;
+    void join(double a, double b){
+        System.out.println(a+b);
+    }
+    void join(String a, String b){
+        System.out.println(a+b);
     }
 }
 
 class Main {
     public static void main(String[] args) {
-        Demo obj1 = new Demo(10);
-        System.out.println(obj1.getNum());
+        Demo obj1=new Demo();
+        obj1.join(1,2);
+        obj1.join(1.5,2.5);
+        obj1.join("Hello ", "World");
     }
 }
