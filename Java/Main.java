@@ -1,16 +1,18 @@
-class Demo{
+class Demo {
     int num;
-    Demo(int num){
-        this.num=num;
+
+    Demo(int num) {
+        this.num = num;
     }
-    int getNum(){
+
+    int getNum() {
         return num;
     }
 }
 
-class Main{
-    public static void main(String [] args){
-        Demo obj1=new Demo(10);
-        
+class Main {
+    public static void main(String[] args) {
+        Demo obj1 = new Demo(10);
+        System.out.println(obj1.getNum());
     }
 }
