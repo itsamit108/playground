@@ -1,9 +1,9 @@
-#include <bits/stdc++.h> // bits/stdc++.h should not be used in production.
-
+#include <iostream>
 using namespace std;
 
-struct Node
+class Node
 {
+public:
     int data;
     Node *next;
 };
@@ -12,23 +12,14 @@ int main()
 {
     Node *head = new Node();
     Node *second = new Node();
-    Node *third = new Node();
-
     head->data = 1;
     head->next = second;
-
     second->data = 2;
-    second->next = third;
+    second->next = NULL;
 
-    third->data = 3;
-    third->next = NULL;
-
-    Node *temp = head;
-    while (temp != NULL)
-    {
-        cout << temp->data << " ";
-        temp = temp->next;
-    }
+    // free memory allocated for nodes
+    delete head;
+    delete second;
 
     return 0;
 }
