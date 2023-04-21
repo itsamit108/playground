@@ -44,11 +44,20 @@ public:
             current->next = node;
         }
     }
+
+    void remove(int data)
+    {
+        if(head==nullptr)
+        {
+            return;
+        }
+        
+    }
 };
 
 int main()
 {
-    
+
 
     return 0;
 }
