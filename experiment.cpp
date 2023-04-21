@@ -10,17 +10,10 @@ struct Node
 
 int main()
 {
-    // Creating a linked list
-    Node *head = NULL;
-    Node *second = NULL;
-    Node *third = NULL;
+    Node *head = new Node();
+    Node *second = new Node();
+    Node *third = new Node();
 
-    // Allocating memory for nodes in the linked list in the heap
-    head = new Node();
-    second = new Node();
-    third = new Node();
-
-    // Assigning data to the nodes
     head->data = 1;
     head->next = second;
 
@@ -30,7 +23,6 @@ int main()
     third->data = 3;
     third->next = NULL;
 
-    // Printing the linked list
     Node *temp = head;
     while (temp != NULL)
     {
