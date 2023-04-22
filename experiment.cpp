@@ -1,86 +1,34 @@
-#include <bits/stdc++.h> // bits/stdc++.h should not be used in production.
+#include <iostream>
+#include <forward_list>
 
 using namespace std;
 
-class Node
-{
-public:
-    int data;
-    Node *next;
-    Node()
-    {
-        data = 0;
-        next = nullptr;
-    }
-};
-
-class LinkedList
-{
-public:
-    Node *head;
-
-    LinkedList()
-    {
-        head = nullptr;
-    }
-
-    void add(int data)
-    {
-        Node *node = new Node();
-        node->data = data;
-        node->next = nullptr;
-
-        if (head == nullptr)
-        {
-            head = node;
-        }
-        else
-        {
-            Node *current = head;
-            while (current->next != nullptr)
-            {
-                current = current->next;
-            }
-            current->next = node;
-        }
-    }
-
-    void remove(int data)
-    {
-        if (head == nullptr)
-        {
-            return;
-        }
-        else
-        {
-            Node *current = head;
-            Node *previous = nullptr;
-            while (current->next != nullptr)
-            {
-                if (current->data == data)
-                {
-                    if (previous == nullptr)
-                    {
-                        head = current->next;
-                        delete current;
-                        return;
-                    }
-                    else
-                    {
-                        previous->next = current->next;
-                        delete current;
-                        return;
-                    }
-                }
-                previous = current;
-                current = current->next;
-            }
-        }
-    }
-};
-
 int main()
 {
+    forward_list<int> myList = {1, 2, 3, 4, 5};
+
+    // Print the list
+    for (auto i : myList)
+    {
+        cout << i << " ";
+    }
+    cout << endl;
+
+    // Insert an element at the beginning of the list
+    myList.push_front(0);
+
+    // Insert an element after the first element of the list
+    myList.insert_after(myList.begin(), 6);
+
+    // Erase an element from the list
+    myList.erase_after(++myList.begin());
+
+    // Print the modified list
+    for (auto i : myList)
+    {
+        cout << i << " ";
+    }
+    cout << endl;
 
     return 0;
 }
