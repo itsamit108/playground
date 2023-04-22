@@ -47,17 +47,40 @@ public:
 
     void remove(int data)
     {
-        if(head==nullptr)
+        if (head == nullptr)
         {
             return;
         }
-        
+        else
+        {
+            Node *current = head;
+            Node *previous = nullptr;
+            while (current->next != nullptr)
+            {
+                if (current->data == data)
+                {
+                    if (previous == nullptr)
+                    {
+                        head = current->next;
+                        delete current;
+                        return;
+                    }
+                    else
+                    {
+                        previous->next = current->next;
+                        delete current;
+                        return;
+                    }
+                }
+                previous = current;
+                current = current->next;
+            }
+        }
     }
 };
 
 int main()
 {
-
 
     return 0;
 }
