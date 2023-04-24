@@ -1,16 +1,18 @@
-<html><body>
-Hello World! ! !<p>Today is { {today}}</p>
-{ % for days in d
-Kul >
-<li> { {days}} </li>
+<html>
+<body>
+Hello World! ! !
+<p>Today is {{today}}</p>
+<ul>
+{% for days in d %}
+    <li>{{days}}</li>
+{% endfor %}
 </ul>
-Coe n
-{ % if today. day == 1
-<p>Today is the first day of the month</p>
-{ % elif today. day -
-= 30 0/0}
-<p>Today is the last day of the month</p>
-{ % else 0/0}
-<p>Today is the middle day of the month</p>
-{%endif%}
+{% if today.day == 1 %}
+    <p>Today is the first day of the month</p>
+{% elif today.day == 30 %}
+    <p>Today is the last day of the month</p>
+{% else %}
+    <p>Today is the middle day of the month</p>
+{% endif %}
+</body>
 </html>
