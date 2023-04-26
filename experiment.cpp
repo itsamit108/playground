@@ -1,44 +1,68 @@
-#include <bits/stdc++.h> // bits/stdc++.h should not be used in production.
+#include <iostream>
 
-using namespace std;
-
-class Node
+struct ListNode
 {
-public:
-    int data;
-    Node *next;
-    Node()
-    {
-        data = 0;
-        next = nullptr;
-    }
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(NULL) {}
 };
 
-Node *fn(Node *head, int n)
+ListNode *removeNthFromEnd(ListNode *head, int n)
 {
-    Node *curr = head;
-    Node *prev = nullptr;
-    int c = 1;
-    int l = 0;
-    while (curr != nullptr)
+    // Count the number of nodes in the linked list
+    int len = 0;
+    ListNode *curr = head;
+    while (curr != NULL)
     {
+        len++;
         curr = curr->next;
-        l++;
     }
 
-    while (curr != nullptr && c < l - n + 1)
+    // Calculate the position of the node to be removed
+    int pos = len - n;
+
+    // Special case: remove the head node
+    if (pos == 0)
+    {
+        ListNode *temp = head;
+        head = head->next;
+        delete temp;
+        return head;
+    }
+
+    // Traverse the linked list to find the node to be removed
+    ListNode *prev = NULL;
+    curr = head;
+    for (int i = 0; i < pos; i++)
     {
         prev = curr;
         curr = curr->next;
-        c++;
     }
+
+    // Remove the node
     prev->next = curr->next;
     delete curr;
+
     return head;
 }
 
 int main()
 {
+    // Example usage
+    ListNode *head = new ListNode(1);
+    head->next = new ListNode(2);
+    head->next->next = new ListNode(3);
+    head->next->next->next = new ListNode(4);
+    head->next->next->next->next = new ListNode(5);
+
+    head = removeNthFromEnd(head, 2);
+
+    ListNode *curr = head;
+    while (curr != NULL)
+    {
+        std::cout << curr->val << " ";
+        curr = curr->next;
+    }
 
     return 0;
 }
