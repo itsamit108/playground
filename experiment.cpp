@@ -28,8 +28,8 @@ Node *fn(Node *head, int n)
 
     while (curr != nullptr && c < l - n + 1)
     {
-        curr = curr->next;
         prev = curr;
+        curr = curr->next;
         c++;
     }
     prev->next = curr->next;
