@@ -17,7 +17,7 @@ Node* fn(Node* head, int n){
     Node *prev = nullptr;
     int c=1;
     int l = 0;
-    while (curr!=nullptr)
+    while (curr->next!=nullptr)
     {
         curr = curr->next;
         l++;
@@ -36,7 +36,7 @@ Node* fn(Node* head, int n){
 
 int main()
 {
-    
+
 
     return 0;
 }
