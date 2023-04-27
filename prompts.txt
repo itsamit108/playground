@@ -10,4 +10,6 @@ Create short revision notes on hashing in Data Structures and Algorithms using C
 
 Use cases
 
+Advantages and Disadvantages
+
 Do's and don'ts
