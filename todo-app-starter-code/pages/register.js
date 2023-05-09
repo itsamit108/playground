@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 const RegisterForm = () => {
-    const [name, setName] = useState(null)
-    const [emial, setEmial] = useState(null)
-    const [password, setPassword] = useState(null)
+    const [name, setName] = useState(null);
+    const [emial, setEmial] = useState(null);
+    const [password, setPassword] = useState(null);
 
     return (
         <main className="flex lg:h-[100vh]">
@@ -24,30 +24,32 @@ const RegisterForm = () => {
                         </span>
                     </div>
 
-                    <div className="mt-10 pl-1 flex flex-col">
-                        <label>Name</label>
-                        <input
-                            type="text"
-                            className="font-medium border-b border-black p-4 outline-0 focus-within:border-blue-400"
-                        />
-                    </div>
-                    <div className="mt-10 pl-1 flex flex-col">
-                        <label>Email</label>
-                        <input
-                            type="text"
-                            className="font-medium border-b border-black p-4 outline-0 focus-within:border-blue-400"
-                        />
-                    </div>
-                    <div className="mt-10 pl-1 flex flex-col">
-                        <label>Password</label>
-                        <input
-                            type="password"
-                            className="font-medium border-b border-black p-4 outline-0 focus-within:border-blue-400"
-                        />
-                    </div>
-                    <button className="bg-black text-white w-44 py-4 mt-10 rounded-full transition-transform hover:bg-black/[0.8] active:scale-90">
-                        Sign Up
-                    </button>
+                    <form onSubmit={(e) => e.preventDefault()}>
+                        <div className="mt-10 pl-1 flex flex-col">
+                            <label>Name</label>
+                            <input
+                                type="text"
+                                className="font-medium border-b border-black p-4 outline-0 focus-within:border-blue-400"
+                            />
+                        </div>
+                        <div className="mt-10 pl-1 flex flex-col">
+                            <label>Email</label>
+                            <input
+                                type="text"
+                                className="font-medium border-b border-black p-4 outline-0 focus-within:border-blue-400"
+                            />
+                        </div>
+                        <div className="mt-10 pl-1 flex flex-col">
+                            <label>Password</label>
+                            <input
+                                type="password"
+                                className="font-medium border-b border-black p-4 outline-0 focus-within:border-blue-400"
+                            />
+                        </div>
+                        <button className="bg-black text-white w-44 py-4 mt-10 rounded-full transition-transform hover:bg-black/[0.8] active:scale-90">
+                            Sign Up
+                        </button>
+                    </form>
                 </div>
             </div>
             <div
@@ -56,7 +58,7 @@ const RegisterForm = () => {
                     backgroundImage: "url('/login-banner.jpg')",
                 }}
             ></div>
-        </main>
+        </main >
     );
 };
 
