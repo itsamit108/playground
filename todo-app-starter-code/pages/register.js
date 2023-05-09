@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 const RegisterForm = () => {
     const [name, setName] = useState(null);
-    const [emial, setEmial] = useState(null);
+    const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
 
     return (
@@ -30,13 +30,15 @@ const RegisterForm = () => {
                             <input
                                 type="text"
                                 className="font-medium border-b border-black p-4 outline-0 focus-within:border-blue-400" required
+                                onChange={(e) => setUsername(e.target.value)}
                             />
                         </div>
                         <div className="mt-10 pl-1 flex flex-col">
                             <label>Email</label>
                             <input
-                                type="text"
+                                type="email"
                                 className="font-medium border-b border-black p-4 outline-0 focus-within:border-blue-400" required
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
                         <div className="mt-10 pl-1 flex flex-col">
@@ -44,6 +46,7 @@ const RegisterForm = () => {
                             <input
                                 type="password"
                                 className="font-medium border-b border-black p-4 outline-0 focus-within:border-blue-400" required
+                                onChange={(e) => setPassword(e.password.value)}
                             />
                         </div>
                         <button className="bg-black text-white w-44 py-4 mt-10 rounded-full transition-transform hover:bg-black/[0.8] active:scale-90">
