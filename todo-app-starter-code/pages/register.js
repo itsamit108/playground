@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
+import { auth } from "../firebase/firebase";
+
 const RegisterForm = () => {
     const [name, setName] = useState(null);
     const [email, setEmail] = useState(null);
@@ -9,7 +11,7 @@ const RegisterForm = () => {
         if (!name || !email || !password) {
             return;
         }
-        
+
     };
 
     return (
