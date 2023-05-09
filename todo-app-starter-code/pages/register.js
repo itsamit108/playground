@@ -5,6 +5,10 @@ const RegisterForm = () => {
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
 
+    const signupHandler = () => {
+
+    };
+
     return (
         <main className="flex lg:h-[100vh]">
             <div className="w-full lg:w-[60%] p-8 md:p-14 flex items-center justify-center lg:justify-start">
@@ -49,7 +53,8 @@ const RegisterForm = () => {
                                 onChange={(e) => setPassword(e.password.value)}
                             />
                         </div>
-                        <button className="bg-black text-white w-44 py-4 mt-10 rounded-full transition-transform hover:bg-black/[0.8] active:scale-90">
+                        <button className="bg-black text-white w-44 py-4 mt-10 rounded-full transition-transform hover:bg-black/[0.8] active:scale-90"
+                            onClick={signupHandler}>
                             Sign Up
                         </button>
                     </form>
