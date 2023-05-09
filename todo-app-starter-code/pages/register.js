@@ -6,7 +6,10 @@ const RegisterForm = () => {
     const [password, setPassword] = useState(null);
 
     const signupHandler = () => {
-
+        if (!name || !email || !password) {
+            return;
+        }
+        
     };
 
     return (
