@@ -1,6 +1,10 @@
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
 const RegisterForm = () => {
+    const [name, setName] = useState(null)
+    const [emial, setEmial] = useState(null)
+    const [password, setPassword] = useState(null)
+
     return (
         <main className="flex lg:h-[100vh]">
             <div className="w-full lg:w-[60%] p-8 md:p-14 flex items-center justify-center lg:justify-start">
