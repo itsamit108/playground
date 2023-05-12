@@ -5,7 +5,8 @@ using namespace std;
 int main()
 {
     int r = 3, c = 3;
-    int mat[r][c];
+
+    vector<vector<int>> mat(r, vector<int>(c));
 
     for (int i = 0; i < r; i++)
     {
