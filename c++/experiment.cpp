@@ -1,4 +1,5 @@
-#include <bits/stdc++.h> // bits/stdc++.h should not be used in production.
+#include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -6,7 +7,7 @@ int main()
 {
     int r = 3, c = 3;
 
-    vector<vector<int>> mat;
+    vector<vector<int>> mat(r, vector<int>(c));
 
     for (int i = 0; i < r; i++)
     {
@@ -14,7 +15,7 @@ int main()
         {
             int t;
             cin >> t;
-            mat[r][c] = t;
+            mat[i][j] = t;
         }
     }
 
@@ -22,7 +23,7 @@ int main()
     {
         for (int j = 0; j < c; j++)
         {
-            cout << mat[r][c] << " ";
+            cout << mat[i][j] << " ";
         }
         cout << endl;
     }
