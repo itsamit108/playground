@@ -12,7 +12,9 @@ int main()
     {
         for (int j = 0; j < c; j++)
         {
-            mat[r][c] = i * j;
+            int t;
+            cin >> t;
+            mat[r][c] = t;
         }
     }
 
