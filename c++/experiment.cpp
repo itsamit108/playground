@@ -6,7 +6,7 @@ int main()
 {
     int r = 3, c = 3;
 
-    vector<vector<int>> mat(r, vector<int>(c));
+    vector<vector<int>> mat;
 
     for (int i = 0; i < r; i++)
     {
