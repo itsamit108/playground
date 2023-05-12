@@ -5,25 +5,26 @@ using namespace std;
 
 int main()
 {
-    int r = 3, c = 3;
+    // int r = 3, c = 3;
 
-    vector<vector<int>> mat(r, vector<int>(c));
+    // vector<vector<int>> mat(r, vector<int>(c));
+    vector<vector<int>> mat = {{1, 2, 3}, {4, 0, 4}, {6, 7, 8}};
 
-    for (int i = 0; i < r; i++)
+    // for (int i = 0; i < r; i++)
+    // {
+    //     for (int j = 0; j < c; j++)
+    //     {
+    //         int t;
+    //         cin >> t;
+    //         mat[i][j] = t;
+    //     }
+    // }
+
+    for (auto i : mat)
     {
-        for (int j = 0; j < c; j++)
+        for (auto j : i)
         {
-            int t;
-            cin >> t;
-            mat[i][j] = t;
-        }
-    }
-
-    for (int i = 0; i < r; i++)
-    {
-        for (int j = 0; j < c; j++)
-        {
-            cout << mat[i][j] << " ";
+            cout << j << " ";
         }
         cout << endl;
     }
