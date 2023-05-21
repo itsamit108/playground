@@ -14,4 +14,4 @@ Advantages and Disadvantages
 
 Do's and don'ts
 
-Explain the functioning of the function and describe how the variables change at each step using an example
+Explain how the function works and how the variables change at each step, using an example
