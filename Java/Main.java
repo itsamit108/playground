@@ -1,35 +1,63 @@
-public class Main {
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class Main implements MouseListener, MouseMotionListener {
+
+    private JFrame frame;
+    private JPanel panel;
+
+    public MouseEventDemo() {
+        frame = new JFrame("Mouse Event Demo");
+        panel = new JPanel();
+        panel.addMouseListener(this);
+        panel.addMouseMotionListener(this);
+        frame.add(panel);
+        frame.setSize(400, 300);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+
     public static void main(String[] args) {
-        String str1 = new String("Hello");
-        String str2 = new String("Hello");
-        String str3 = str1;
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new MouseEventDemo();
+            }
+        });
+    }
 
-        // Using equals() method
-        System.out.println("Using equals() method:");
-        System.out.println("str1.equals(str2): " + str1.equals(str2)); // true
-        System.out.println("str1.equals(str3): " + str1.equals(str3)); // true
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        System.out.println("Mouse Clicked");
+    }
 
-        // Using == operator
-        System.out.println("\nUsing == operator:");
-        System.out.println("str1 == str2: " + (str1 == str2)); // false
-        System.out.println("str1 == str3: " + (str1 == str3)); // true
+    @Override
+    public void mousePressed(MouseEvent e) {
+        System.out.println("Mouse Pressed");
+    }
 
-        // Integer comparison
-        Integer num1 = 5;
-        Integer num2 = 5;
-        Integer num3 = 5;
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        System.out.println("Mouse Released");
+    }
 
-        System.out.println("\nInteger comparison:");
-        System.out.println("num1 == num2: " + (num1 == num2)); // true
-        System.out.println("num1 == num3: " + (num1 == num3)); // true
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        System.out.println("Mouse Entered");
+    }
 
-        // Object comparison
-        Object obj1 = new Object();
-        Object obj2 = new Object();
-        Object obj3 = obj1;
+    @Override
+    public void mouseExited(MouseEvent e) {
+        System.out.println("Mouse Exited");
+    }
 
-        System.out.println("\nObject comparison:");
-        System.out.println("obj1 == obj2: " + (obj1 == obj2)); // false
-        System.out.println("obj1 == obj3: " + (obj1 == obj3)); // true
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        System.out.println("Mouse Dragged: X=" + e.getX() + ", Y=" + e.getY());
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        System.out.println("Mouse Moved: X=" + e.getX() + ", Y=" + e.getY());
     }
 }
