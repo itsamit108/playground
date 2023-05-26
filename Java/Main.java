@@ -1,13 +1,24 @@
-import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import javax.swing.JToggleButton;
 
 public class Main {
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Label Example");
-        ImageIcon icon = new ImageIcon("path_to_image.jpg");
-        JLabel label = new JLabel("Hello, World!", icon, JLabel.CENTER);
-        frame.add(label);
+        JFrame frame = new JFrame("Button Example");
+
+        JButton button = new JButton("Click me!");
+        JToggleButton toggleButton = new JToggleButton("Toggle");
+        JCheckBox checkBox = new JCheckBox("Check me");
+        JRadioButton radioButton = new JRadioButton("Select me");
+
+        frame.add(button);
+        frame.add(toggleButton);
+        frame.add(checkBox);
+        frame.add(radioButton);
+
+        frame.setLayout(new FlowLayout()); // Set a layout manager
         frame.pack();
         frame.setVisible(true);
     }
