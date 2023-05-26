@@ -7,7 +7,7 @@ public class Main implements MouseListener, MouseMotionListener {
     private JFrame frame;
     private JPanel panel;
 
-    public MouseEventDemo() {
+    public Main() {
         frame = new JFrame("Mouse Event Demo");
         panel = new JPanel();
         panel.addMouseListener(this);
@@ -21,7 +21,7 @@ public class Main implements MouseListener, MouseMotionListener {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new MouseEventDemo();
+                new Main();
             }
         });
     }
