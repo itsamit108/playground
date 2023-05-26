@@ -2,16 +2,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Main implements MouseListener, MouseMotionListener {
+public class Main implements KeyListener {
 
     private JFrame frame;
     private JPanel panel;
 
     public Main() {
-        frame = new JFrame("Mouse Event Demo");
+        frame = new JFrame("Keyboard Event Demo");
         panel = new JPanel();
-        panel.addMouseListener(this);
-        panel.addMouseMotionListener(this);
+        panel.setFocusable(true);
+        panel.requestFocusInWindow();
+        panel.addKeyListener(this);
         frame.add(panel);
         frame.setSize(400, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -27,37 +28,20 @@ public class Main implements MouseListener, MouseMotionListener {
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-        System.out.println("Mouse Clicked");
+    public void keyTyped(KeyEvent e) {
+        char keyChar = e.getKeyChar();
+        System.out.println("Key Typed: " + keyChar);
     }
 
     @Override
-    public void mousePressed(MouseEvent e) {
-        System.out.println("Mouse Pressed");
+    public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        System.out.println("Key Pressed: " + KeyEvent.getKeyText(keyCode));
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) {
-        System.out.println("Mouse Released");
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        System.out.println("Mouse Entered");
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        System.out.println("Mouse Exited");
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        System.out.println("Mouse Dragged: X=" + e.getX() + ", Y=" + e.getY());
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-        System.out.println("Mouse Moved: X=" + e.getX() + ", Y=" + e.getY());
+    public void keyReleased(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        System.out.println("Key Released: " + KeyEvent.getKeyText(keyCode));
     }
 }
