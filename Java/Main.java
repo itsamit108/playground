@@ -17,11 +17,11 @@ public class Main {
         // Integer comparison
         Integer num1 = 5;
         Integer num2 = 5;
-        Integer num3 = new Integer(5);
+        Integer num3 = 5;
 
         System.out.println("\nInteger comparison:");
         System.out.println("num1 == num2: " + (num1 == num2)); // true
-        System.out.println("num1 == num3: " + (num1 == num3)); // false
+        System.out.println("num1 == num3: " + (num1 == num3)); // true
 
         // Object comparison
         Object obj1 = new Object();
