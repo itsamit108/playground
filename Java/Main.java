@@ -1,47 +1,44 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 
-public class Main implements KeyListener {
+public class MovingBanner extends JFrame {
+    private JLabel bannerLabel;
+    private int xCoordinate;
+    private Timer timer;
 
-    private JFrame frame;
-    private JPanel panel;
+    public MovingBanner() {
+        setTitle("Moving Banner");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(400, 100);
+        setResizable(false);
+        setLocationRelativeTo(null);
 
-    public Main() {
-        frame = new JFrame("Keyboard Event Demo");
-        panel = new JPanel();
-        panel.setFocusable(true);
-        panel.requestFocusInWindow();
-        panel.addKeyListener(this);
-        frame.add(panel);
-        frame.setSize(400, 300);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-    }
+        xCoordinate = getWidth();
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                new Main();
+        bannerLabel = new JLabel("Welcome to the Moving Banner!");
+        bannerLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        bannerLabel.setForeground(Color.BLUE);
+        bannerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        add(bannerLabel);
+
+        timer = new Timer(10, e -> {
+            xCoordinate--;
+            if (xCoordinate + bannerLabel.getWidth() < 0) {
+                xCoordinate = getWidth();
             }
+            bannerLabel.setLocation(xCoordinate, bannerLabel.getY());
         });
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
-        char keyChar = e.getKeyChar();
-        System.out.println("Key Typed: " + keyChar);
+    public void startAnimation() {
+        timer.start();
     }
 
-    @Override
-    public void keyPressed(KeyEvent e) {
-        int keyCode = e.getKeyCode();
-        System.out.println("Key Pressed: " + KeyEvent.getKeyText(keyCode));
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        int keyCode = e.getKeyCode();
-        System.out.println("Key Released: " + KeyEvent.getKeyText(keyCode));
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            MovingBanner banner = new MovingBanner();
+            banner.setVisible(true);
+            banner.startAnimation();
+        });
     }
 }
