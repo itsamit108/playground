@@ -1,12 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class MovingBanner extends JFrame {
+public class Main extends JFrame {
     private JLabel bannerLabel;
     private int xCoordinate;
     private Timer timer;
 
-    public MovingBanner() {
+    public Main() {
         setTitle("Moving Banner");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(400, 100);
@@ -36,7 +36,7 @@ public class MovingBanner extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            MovingBanner banner = new MovingBanner();
+            Main banner = new Main();
             banner.setVisible(true);
             banner.startAnimation();
         });
