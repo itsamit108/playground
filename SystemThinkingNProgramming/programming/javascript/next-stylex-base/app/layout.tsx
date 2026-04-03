@@ -31,7 +31,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
     return (
-        <html lang="en" {...stylex.props(styles.html)}>
+        <html lang="en" {...stylex.props(styles.html)} suppressHydrationWarning>
             <body {...stylex.props(styles.body)}>{children}</body>
         </html>
     );
