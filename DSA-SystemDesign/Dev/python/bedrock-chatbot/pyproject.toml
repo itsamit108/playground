@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "bedrock-chatbot"
+version = "0.1.0"
+description = "CLI chatbot powered by LocalStack Bedrock (Converse API) and Ollama"
+authors = ["Amit"]
+readme = "README.md"
+packages = [{ include = "chatbot" }]
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.14"
+boto3 = "^1.35.0"
+python-dotenv = "^1.0.1"
+rich = "^13.9.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.0"
+ruff = "^0.8.0"
+
+[tool.poetry.scripts]
+chatbot = "chatbot.cli:main"
+
+[tool.ruff]
+line-length = 88
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

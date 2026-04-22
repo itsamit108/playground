@@ -1,0 +1,22 @@
+services:
+  localstack:
+    image: localstack/localstack-pro:latest
+    container_name: bedrock-chatbot-localstack
+    ports:
+      - "127.0.0.1:4566:4566"           # LocalStack gateway
+      - "127.0.0.1:4510-4559:4510-4559"  # External service port range
+      - "127.0.0.1:443:443"
+    environment:
+      - LOCALSTACK_AUTH_TOKEN=${LOCALSTACK_AUTH_TOKEN-}
+      - DEBUG=1
+      - PERSISTENCE=1
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      # ── Bedrock-specific ──
+      - DEFAULT_BEDROCK_MODEL=llama3.2    # Ollama model used for emulation
+      - BEDROCK_PREWARM=1                 # Pull & load model on startup
+    volumes:
+      - localstack_data:/var/lib/localstack
+      - /var/run/docker.sock:/var/run/docker.sock
+
+volumes:
+  localstack_data:
