@@ -1,0 +1,233 @@
+/* ===== EPUB3 Base Stylesheet ===== */
+
+/* --- Reset & Base --- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1em;
+  line-height: 1.6;
+  color: #1a1a1a;
+  background: #ffffff;
+  margin: 1.5em 2em;
+  max-width: 40em;
+}
+
+/* --- Headings --- */
+h1 {
+  font-size: 1.8em;
+  font-weight: bold;
+  margin: 1.5em 0 0.6em;
+  line-height: 1.2;
+  page-break-after: avoid;
+  border-bottom: 2px solid #003366;
+  padding-bottom: 0.3em;
+  color: #003366;
+}
+
+h2 {
+  font-size: 1.35em;
+  font-weight: bold;
+  margin: 1.2em 0 0.5em;
+  color: #004488;
+  page-break-after: avoid;
+}
+
+h3 {
+  font-size: 1.1em;
+  font-weight: bold;
+  margin: 1em 0 0.4em;
+  color: #222;
+  page-break-after: avoid;
+}
+
+h4, h5, h6 {
+  font-size: 1em;
+  font-weight: bold;
+  margin: 0.8em 0 0.3em;
+}
+
+/* --- Paragraphs --- */
+p {
+  margin: 0.6em 0;
+  text-align: justify;
+  hyphens: auto;
+}
+
+/* --- Page Breaks --- */
+span[epub|type="pagebreak"] {
+  display: block;
+  height: 0;
+  overflow: hidden;
+}
+
+/* --- Links --- */
+a { color: #0055aa; text-decoration: underline; }
+
+/* --- Lists --- */
+ul, ol {
+  margin: 0.6em 0 0.6em 2em;
+}
+li { margin: 0.3em 0; }
+
+/* --- Tables --- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.92em;
+}
+thead {
+  background-color: #003366;
+  color: #ffffff;
+}
+th {
+  padding: 0.5em 0.7em;
+  text-align: left;
+  font-weight: bold;
+}
+td {
+  padding: 0.45em 0.7em;
+  border-bottom: 1px solid #cccccc;
+  vertical-align: top;
+}
+tbody tr:nth-child(even) { background-color: #f5f8fc; }
+
+/* --- Figures & Images --- */
+figure {
+  margin: 1em auto;
+  text-align: center;
+  page-break-inside: avoid;
+}
+figure img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+figcaption {
+  font-size: 0.85em;
+  color: #555;
+  margin-top: 0.4em;
+  font-style: italic;
+}
+
+/* --- Math (MathML) --- */
+math {
+  display: inline;
+  font-size: 1em;
+}
+math[display="block"],
+.math-block {
+  display: block;
+  margin: 0.8em auto;
+  text-align: center;
+  overflow-x: auto;
+}
+
+/* --- Notes, Definitions, Callout Boxes --- */
+aside.note {
+  background: #eef4ff;
+  border-left: 4px solid #0066cc;
+  border-radius: 3px;
+  margin: 1em 0;
+  padding: 0.7em 1em;
+  page-break-inside: avoid;
+}
+aside.note p { margin: 0.3em 0; }
+
+p.definition {
+  background: #fff8e1;
+  border-left: 4px solid #f0a500;
+  padding: 0.6em 1em;
+  margin: 0.8em 0;
+  font-style: italic;
+}
+
+/* --- Example Blocks --- */
+p.example-label {
+  font-weight: bold;
+  color: #003366;
+  margin-top: 1em;
+  margin-bottom: 0.2em;
+}
+p.example-body { margin: 0.3em 0 0.3em 1em; }
+p.solution {
+  margin: 0.3em 0 0.3em 1em;
+  color: #222;
+}
+p.solution::before {
+  content: "Solution  ";
+  font-weight: bold;
+}
+
+/* --- Exercise Sections --- */
+section.exercise {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin: 1.2em 0;
+  padding: 0.8em 1.2em;
+  page-break-inside: avoid;
+}
+section.exercise h3,
+section.exercise h4 {
+  color: #003366;
+  margin-bottom: 0.5em;
+}
+p.exercise-item {
+  margin: 0.5em 0 0.5em 1.2em;
+  text-indent: -1.2em;
+}
+
+/* --- Epigraph / Chapter-Opening Quote --- */
+blockquote.epigraph {
+  margin: 1.5em 2em;
+  font-style: italic;
+  color: #444;
+  border-left: 3px solid #aaa;
+  padding-left: 1em;
+}
+blockquote.epigraph cite {
+  display: block;
+  margin-top: 0.4em;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 0.9em;
+  text-align: right;
+  color: #666;
+}
+
+/* --- Code Blocks --- */
+pre, code {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.88em;
+}
+pre {
+  background: #f4f4f4;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  padding: 0.8em 1em;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin: 0.8em 0;
+}
+code {
+  background: #f0f0f0;
+  padding: 0.1em 0.3em;
+  border-radius: 2px;
+}
+
+/* --- Horizontal Rule --- */
+hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 1.5em 0;
+}
+
+/* --- Print / Page hints --- */
+@media print {
+  h1, h2, h3 { page-break-after: avoid; }
+  figure, table, section.exercise { page-break-inside: avoid; }
+}
