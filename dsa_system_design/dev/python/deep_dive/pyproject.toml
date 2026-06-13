@@ -4,4 +4,15 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "ebooklib>=0.18",
+    "fastapi>=0.115",
+    "google-genai>=1.0",
+    "httpx>=0.27",
+    "llama-cloud>=0.1.0",
+    "lxml>=5.0",
+    "pillow>=10.0",
+    "python-dotenv>=1.0",
+    "python-multipart>=0.0.9",
+    "uvicorn[standard]>=0.30",
+]

@@ -56,8 +56,8 @@
 | **Auth**          | JWT (python-jose) + bcrypt          |
 | **IaC**           | Terraform                           |
 | **Local Cloud**   | LocalStack                          |
-| **Pkg Manager**   | Poetry (pyproject.toml)             |
-| **Env Manager**   | uv (fast venv + pip)                |
+| **Pkg Manager**   | uv (pyproject.toml + uv.lock)             |
+| **Env Manager**   | uv (fast venv + lockfile)                |
 | **Task Runner**   | GNU Make                            |
 
 ---
@@ -67,7 +67,7 @@
 ```
 overtake/
 ├── main.py              # Entire FastAPI backend (single file, ~700 lines)
-├── pyproject.toml       # Poetry project definition + dependencies
+├── pyproject.toml       # uv project definition + dependencies
 ├── .env                 # Environment configuration
 ├── Makefile             # Dev workflow commands
 ├── docker-compose.yml   # LocalStack container (optional)
@@ -86,7 +86,7 @@ overtake/
 |------------|---------------------------|----------------------------|
 | Python     | `>=3.11`                  | Runtime                    |
 | Docker     | Desktop or CLI            | LocalStack container       |
-| LocalStack | `pip install localstack`  | AWS simulator              |
+| LocalStack | `uv tool install localstack` | AWS simulator           |
 | uv         | `scoop install uv`        | Fast venv + package install|
 | Make       | `scoop install make`      | Task runner                |
 | Terraform  | `scoop install terraform` | Infrastructure as Code     |

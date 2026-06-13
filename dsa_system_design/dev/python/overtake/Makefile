@@ -1,11 +1,8 @@
-.PHONY: venv install infra-up infra-down run fmt clean help
+.PHONY: install sync infra-up infra-down run fmt test clean help
 
-VENV  := .venv
 ifeq ($(OS),Windows_NT)
-    PY    := $(VENV)/Scripts/python.exe
     RM_RF := rmdir /s /q
 else
-    PY    := $(VENV)/bin/python
     RM_RF := rm -rf
 endif
 
@@ -13,20 +10,19 @@ help: ## Show this help
 	@echo Usage: make [target]
 	@echo.
 	@echo Targets:
-	@echo   venv        Create Python virtual environment via uv
-	@echo   install     Install all dependencies via uv
+	@echo   install     Install/sync all dependencies via uv (creates .venv from uv.lock)
+	@echo   sync        Alias for install
 	@echo   infra-up    Start LocalStack and provision Terraform resources
 	@echo   infra-down  Tear down LocalStack
 	@echo   run         Start the FastAPI dev server
 	@echo   fmt         Format code with ruff
+	@echo   test        Run tests
 	@echo   clean       Remove venv, caches, and terraform state
 
-venv: ## Create virtual environment
-	uv venv $(VENV) || echo Venv already exists
-	@echo Virtual environment ready at $(VENV)
+install: ## Install dependencies via uv
+	uv sync
 
-install: venv ## Install dependencies
-	uv pip install --python $(PY) "fastapi[standard]" sqlmodel psycopg2-binary "python-jose[cryptography]" python-multipart boto3 python-dotenv httpx pytest ruff bcrypt
+sync: install ## Alias for install
 
 infra-up: ## Provision Terraform resources against running LocalStack
 	@echo LocalStack should already be running (localstack start)...
@@ -36,14 +32,17 @@ infra-down: ## Destroy Terraform resources
 	cd terraform && terraform destroy -auto-approve
 
 run: ## Run the FastAPI dev server
-	$(PY) -m fastapi dev main.py
+	uv run fastapi dev main.py
 
 fmt: ## Format code
-	$(PY) -m ruff format .
-	$(PY) -m ruff check --fix .
+	uv run ruff format .
+	uv run ruff check --fix .
+
+test: ## Run tests
+	uv run pytest -v
 
 clean: ## Clean everything
-	-$(RM_RF) $(VENV) 2>nul
+	-$(RM_RF) .venv 2>nul
 	-$(RM_RF) __pycache__ 2>nul
 	-$(RM_RF) .pytest_cache 2>nul
 	-$(RM_RF) terraform\.terraform 2>nul

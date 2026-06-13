@@ -1,27 +1,27 @@
-[tool.poetry]
+[project]
 name = "overtake"
 version = "0.1.0"
 description = "Multi-user multimedia note-taking API powered by FastAPI, SQLModel, and AWS (LocalStack)"
-authors = ["Amit"]
-readme = "README.md"
+authors = [{ name = "Amit" }]
+requires-python = ">=3.11,<3.13"
+dependencies = [
+    "fastapi>=0.115.0,<0.116.0",
+    "uvicorn[standard]>=0.34.0,<0.35.0",
+    "sqlmodel>=0.0.22,<0.0.23",
+    "psycopg2-binary>=2.9.9,<3.0.0",
+    "python-jose[cryptography]>=3.3.0,<4.0.0",
+    "passlib[bcrypt]>=1.7.4,<2.0.0",
+    "python-multipart>=0.0.18,<0.0.19",
+    "boto3>=1.35.0,<2.0.0",
+    "python-dotenv>=1.0.1,<2.0.0",
+]
 
-[tool.poetry.dependencies]
-python = ">=3.11,<3.13"
-fastapi = "^0.115.0"
-uvicorn = {extras = ["standard"], version = "^0.34.0"}
-sqlmodel = "^0.0.22"
-psycopg2-binary = "^2.9.9"
-python-jose = {extras = ["cryptography"], version = "^3.3.0"}
-passlib = {extras = ["bcrypt"], version = "^1.7.4"}
-python-multipart = "^0.0.18"
-boto3 = "^1.35.0"
-python-dotenv = "^1.0.1"
+[dependency-groups]
+dev = [
+    "httpx>=0.28.0,<0.29.0",
+    "pytest>=8.3.0,<9.0.0",
+    "ruff>=0.8.0,<0.9.0",
+]
 
-[tool.poetry.group.dev.dependencies]
-httpx = "^0.28.0"
-pytest = "^8.3.0"
-ruff = "^0.8.0"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.uv]
+package = false

@@ -29,11 +29,11 @@ status: ## Check LocalStack health
 		powershell -Command "Invoke-WebRequest -Uri http://localhost:4566/_localstack/health -UseBasicParsing | Select-Object -ExpandProperty Content | ConvertFrom-Json | ConvertTo-Json"
 
 # ── Application ─────────────────────────────────────────────────
-install: ## Install Python dependencies via Poetry
-	poetry install
+install: ## Install Python dependencies via uv
+	uv sync
 
 chat: ## Run the interactive chatbot
-	poetry run chatbot
+	uv run chatbot
 
 models: ## List available Bedrock foundation models
 	awslocal bedrock list-foundation-models --query 'modelSummaries[*].{Id:modelId,Name:modelName,Provider:providerName}' --output table 2>/dev/null || \
@@ -41,11 +41,11 @@ models: ## List available Bedrock foundation models
 
 # ── Quality ─────────────────────────────────────────────────────
 test: ## Run tests
-	poetry run pytest -v
+	uv run pytest -v
 
 lint: ## Lint with ruff
-	poetry run ruff check chatbot/
-	poetry run ruff format --check chatbot/
+	uv run ruff check chatbot/
+	uv run ruff format --check chatbot/
 
 # ── Cleanup ─────────────────────────────────────────────────────
 clean: ## Remove caches and build artefacts

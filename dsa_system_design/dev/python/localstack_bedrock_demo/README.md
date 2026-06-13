@@ -20,7 +20,7 @@ No AWS account required — everything runs locally.
 |------|---------|
 | **Docker** (+ Docker Compose) | Latest |
 | **Python** | 3.11 – 3.13 |
-| **Poetry** | 1.8+ |
+| **uv** | Latest |
 | **LocalStack CLI** | Latest (with Pro auth token) |
 
 ## Quick Start
@@ -45,13 +45,13 @@ docker compose up -d
 ### 2. Install Python dependencies
 
 ```bash
-poetry install
+uv sync
 ```
 
 ### 3. Run the chatbot
 
 ```bash
-poetry run chatbot
+uv run chatbot
 
 # Or use the Makefile
 make chat
@@ -106,7 +106,7 @@ make up        Start LocalStack (Bedrock)
 make down      Stop LocalStack
 make logs      Tail LocalStack logs
 make status    Check LocalStack health
-make install   Install Python deps via Poetry
+make install   Install Python deps via uv
 make chat      Run the interactive chatbot
 make models    List available Bedrock models
 make test      Run tests
@@ -139,7 +139,7 @@ bedrock-chatbot/
 ├── .gitignore
 ├── docker-compose.yml    # LocalStack + Bedrock
 ├── Makefile
-├── pyproject.toml        # Poetry config
+├── pyproject.toml        # uv / PEP 621 config
 └── README.md
 ```
 
