@@ -387,3 +387,34 @@ thumb
 sketch
 
 # End of https://www.toptal.com/developers/gitignore/api/python,node,react,flutter
+
+### Terraform ###
+# Local .terraform directories (provider plugins, modules — can be hundreds of MB)
+**/.terraform/*
+.terraform/
+
+# Terraform state files (may contain sensitive data; environment-specific)
+*.tfstate
+*.tfstate.*
+
+# Lock info for state
+.terraform.tfstate.lock.info
+
+# Crash log files
+crash.log
+crash.*.log
+
+# .tfvars files may contain secrets
+*.tfvars
+*.tfvars.json
+
+# Override files (local overrides not meant for VCS)
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Saved plan output
+*.tfplan
+
+# Note: .terraform.lock.hcl IS intentionally tracked (dependency lock file)
