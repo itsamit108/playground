@@ -1,115 +1,90 @@
-import asyncio
-import os
-import platform
-import subprocess
-import sys
+"""FastAPI application factory + lifespan.
 
-import psutil
+Entrypoint ``app.main:app`` (referenced by ``[tool.fastapi]`` and the
+``.fastapicloud/`` deploy config). The app factory wires the v1 API router,
+exception handlers, logging, and the background counter lifecycle.
+
+Original demo behavior is preserved as first-class features:
+- ``/`` , ``/health`` , ``/counter`` , ``/specs`` still work (root + /api/v1).
+- the counter runs as a background task started in the lifespan.
+- system specs come from the system service (psutil/GPU logic).
+"""
+
+from __future__ import annotations
+
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 
+from app.api.v1.router import api_router
+from app.core.config import get_settings
+from app.core.exceptions import register_exception_handlers
+from app.core.logging import get_logger, setup_logging
+from app.schemas.system import RootResponse, SystemSpecsResponse
+from app.services.counter_service import counter_service
+from app.services.system_service import system_service
 
-app = FastAPI(title="FastAPI Cloud Demo")
-count = 0
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    settings = get_settings()
+    setup_logging(level=settings.log_level, json_logs=settings.log_json)
+    logger = get_logger("app.main")
 
-def gb(value):
-    return round(value / (1024**3), 2)
+    # Configure and start the background counter (preserved demo behavior).
+    counter_service.configure(
+        start=settings.counter_start,
+        interval_seconds=settings.counter_interval_seconds,
+    )
+    counter_service.start()
+    logger.info("%s v%s started", settings.app_name, settings.app_version)
 
-
-def gpu_specs():
     try:
-        output = subprocess.check_output(
-            [
-                "nvidia-smi",
-                "--query-gpu=name,memory.total,memory.used,driver_version",
-                "--format=csv,noheader,nounits",
-            ],
-            text=True,
-            timeout=3,
+        yield
+    finally:
+        await counter_service.stop()
+        logger.info("Shutdown complete")
+
+
+def create_app() -> FastAPI:
+    settings = get_settings()
+    app = FastAPI(
+        title=settings.app_name,
+        version=settings.app_version,
+        lifespan=lifespan,
+    )
+
+    register_exception_handlers(app)
+
+    # Versioned API.
+    app.include_router(api_router, prefix=settings.api_v1_prefix)
+
+    # --- Preserved root endpoints (backwards compatible) ---
+    @app.get("/", response_model=RootResponse, tags=["root"])
+    def home() -> RootResponse:
+        return RootResponse(
+            message="Counter is running",
+            count=counter_service.count,
+            system_specs=SystemSpecsResponse(**system_service.specs()),
         )
+
+    @app.get("/health", tags=["health"])
+    def root_health() -> dict:
         return {
-            "detected": True,
-            "source": "nvidia-smi",
-            "gpus": [
-                dict(
-                    zip(
-                        ["name", "memory_total_mb", "memory_used_mb", "driver_version"],
-                        [value.strip() for value in line.split(",")],
-                    )
-                )
-                for line in output.splitlines()
-            ],
+            "status": "ok",
+            "count": counter_service.count,
+            "system_specs": system_service.specs(),
         }
-    except Exception:
-        return {"detected": False, "message": "No GPU detected or GPU tools unavailable"}
+
+    @app.get("/counter", tags=["counter"])
+    def root_counter() -> dict:
+        return {"count": counter_service.count}
+
+    @app.get("/specs", tags=["specs"])
+    def root_specs() -> dict:
+        return system_service.specs()
+
+    return app
 
 
-def system_specs():
-    memory = psutil.virtual_memory()
-    disk = psutil.disk_usage("/")
-
-    return {
-        "os": {
-            "system": platform.system(),
-            "release": platform.release(),
-            "machine": platform.machine(),
-        },
-        "python": {
-            "version": platform.python_version(),
-            "executable": sys.executable,
-        },
-        "cpu": {
-            "logical_cores": os.cpu_count(),
-            "physical_cores": psutil.cpu_count(logical=False),
-            "usage_percent": psutil.cpu_percent(interval=0.1),
-        },
-        "memory": {
-            "total_gb": gb(memory.total),
-            "available_gb": gb(memory.available),
-            "used_gb": gb(memory.used),
-            "usage_percent": memory.percent,
-        },
-        "disk": {
-            "total_gb": gb(disk.total),
-            "free_gb": gb(disk.free),
-            "used_gb": gb(disk.used),
-            "usage_percent": disk.percent,
-        },
-        "gpu": gpu_specs(),
-        "process": {
-            "pid": os.getpid(),
-        },
-    }
-
-
-async def keep_counting():
-    global count
-
-    while True:
-        await asyncio.sleep(1)
-        count += 1
-
-
-@app.on_event("startup")
-async def start_counter():
-    asyncio.create_task(keep_counting())
-
-
-@app.get("/")
-def home():
-    return {"message": "Counter is running", "count": count, "system_specs": system_specs()}
-
-
-@app.get("/health")
-def health():
-    return {"status": "ok", "count": count, "system_specs": system_specs()}
-
-
-@app.get("/counter")
-def counter():
-    return {"count": count}
-
-
-@app.get("/specs")
-def specs():
-    return system_specs()
+app = create_app()

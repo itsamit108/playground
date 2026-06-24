@@ -1,7 +1,7 @@
 [project]
-name = "bedrock-chatbot"
-version = "0.1.0"
-description = "CLI chatbot powered by LocalStack Bedrock (Converse API) and Ollama"
+name = "bedrock-genai-service"
+version = "0.2.0"
+description = "FastAPI GenAI service: Bedrock Converse (LocalStack) chat + agent + RAG, with an offline EchoProvider fallback"
 authors = [{ name = "Amit" }]
 readme = "README.md"
 requires-python = ">=3.11,<3.14"
@@ -9,14 +9,19 @@ dependencies = [
     "boto3>=1.35.0,<2.0.0",
     "python-dotenv>=1.0.1,<2.0.0",
     "rich>=13.9.0,<14.0.0",
+    "fastapi>=0.115.0,<1.0.0",
+    "uvicorn[standard]>=0.32.0,<1.0.0",
+    "pydantic-settings>=2.6.0,<3.0.0",
 ]
 
 [project.scripts]
-chatbot = "chatbot.cli:main"
+chatbot = "scripts.chat_cli:main"
 
 [dependency-groups]
 dev = [
     "pytest>=8.3.0,<9.0.0",
+    "pytest-asyncio>=0.24.0,<1.0.0",
+    "httpx>=0.27.0,<1.0.0",
     "ruff>=0.8.0,<0.9.0",
 ]
 
@@ -25,11 +30,15 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["chatbot"]
+packages = ["app", "scripts"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
 
 [tool.ruff]
 line-length = 88
-target-version = "py313"
+target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "W", "UP"]
