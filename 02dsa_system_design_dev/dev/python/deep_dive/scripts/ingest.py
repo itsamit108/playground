@@ -9,8 +9,12 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
-from app.core.config import get_settings
-from app.services.retrieval_service import RetrievalService
+# Make `app` importable when run directly (`python scripts/ingest.py`); the
+# project uses package=false so `app` is not installed into the environment.
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from app.core.config import get_settings  # noqa: E402
+from app.services.retrieval_service import RetrievalService  # noqa: E402
 
 
 def main(argv: list[str]) -> int:

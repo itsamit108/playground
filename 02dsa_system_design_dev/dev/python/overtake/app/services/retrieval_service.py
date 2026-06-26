@@ -19,4 +19,5 @@ def search(
     # Lazily (re)index the user's notes so search reflects current data.
     note_service.reindex_user_notes(session, user)
     retriever = Retriever()
-    return retriever.retrieve(user_id=user.id, query=query, top_k=top_k)  # type: ignore[arg-type]
+    assert user.id is not None  # PK is populated once the row is persisted
+    return retriever.retrieve(user_id=user.id, query=query, top_k=top_k)

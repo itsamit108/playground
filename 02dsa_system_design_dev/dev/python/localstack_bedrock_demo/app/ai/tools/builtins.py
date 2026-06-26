@@ -24,7 +24,13 @@ _OFFLINE_MODELS = [
 
 
 def list_models(settings: Settings) -> list[dict[str, Any]]:
-    """List Bedrock foundation models; fall back to a static list offline."""
+    """List Bedrock foundation models; fall back to a static list offline.
+
+    In offline (``echo``) mode we skip the boto call entirely so the tool — and
+    any test that exercises it — is instant and deterministic with no network.
+    """
+    if (settings.llm_provider or "").lower() == "echo":
+        return _OFFLINE_MODELS
     try:
         from app.ai.models.providers import BedrockProvider
 

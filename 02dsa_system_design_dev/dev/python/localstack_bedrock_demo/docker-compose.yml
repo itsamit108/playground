@@ -18,5 +18,21 @@ services:
       - localstack_data:/var/lib/localstack
       - /var/run/docker.sock:/var/run/docker.sock
 
+  api:
+    build: .
+    container_name: bedrock-genai-api
+    depends_on:
+      - localstack
+    ports:
+      - "8000:8000"
+    environment:
+      # Point at LocalStack Bedrock over the compose network. With LLM_PROVIDER=auto
+      # the service uses Bedrock when reachable and falls back to the offline
+      # EchoProvider otherwise, so the API is healthy even before the model warms up.
+      - AWS_ENDPOINT_URL=http://localstack:4566
+      - LLM_PROVIDER=${LLM_PROVIDER:-auto}
+      - BEDROCK_MODEL_ID=${BEDROCK_MODEL_ID:-ollama.llama3.2}
+    restart: unless-stopped
+
 volumes:
   localstack_data:

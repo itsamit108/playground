@@ -20,6 +20,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "lxml-stubs>=0.5.1",
     "pytest>=8.0",
     "pytest-asyncio>=0.24",
 ]
@@ -31,3 +32,13 @@ addopts = "-ra"
 
 [tool.uv]
 package = false
+
+# Point ty (and other tools) at this project's virtualenv so imports resolve
+# correctly even when the type checker is launched from a parent workspace.
+[tool.ty.environment]
+python = ".venv"
+python-version = "3.13"
+
+[tool.ty.src]
+# Don't type-check the vendored virtualenv or generated artifacts.
+exclude = [".venv", "generated", "output"]

@@ -119,12 +119,13 @@ class OpenAIProvider:
         temperature: float = 0.2,
         tools: list | None = None,
     ) -> dict:
-        from openai import AsyncOpenAI  # lazy import; only when actually used
+        # Optional extra (not a declared dependency); imported lazily.
+        from openai import AsyncOpenAI  # ty: ignore[unresolved-import]
 
         client = AsyncOpenAI(api_key=self._api_key)
         resp = await client.chat.completions.create(
             model=model or self._model,
-            messages=list(messages),  # type: ignore[arg-type]
+            messages=list(messages),
             temperature=temperature,
             tools=tools or None,
         )
@@ -155,7 +156,8 @@ class AnthropicProvider:
         temperature: float = 0.2,
         tools: list | None = None,
     ) -> dict:
-        from anthropic import AsyncAnthropic  # lazy import; only when actually used
+        # Optional extra (not a declared dependency); imported lazily.
+        from anthropic import AsyncAnthropic  # ty: ignore[unresolved-import]
 
         client = AsyncAnthropic(api_key=self._api_key)
         system = _system_context(messages)

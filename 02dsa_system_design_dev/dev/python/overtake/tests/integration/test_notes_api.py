@@ -56,8 +56,8 @@ def test_note_crud_and_search(client):
 
 
 def test_multi_user_isolation(client):
-    token_a = register_and_login(client, "ua")
-    token_b = register_and_login(client, "ub")
+    token_a = register_and_login(client, "usera")
+    token_b = register_and_login(client, "userb")
     ha = {"Authorization": f"Bearer {token_a}"}
     hb = {"Authorization": f"Bearer {token_b}"}
 

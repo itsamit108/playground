@@ -32,7 +32,7 @@ infra-down: ## Destroy Terraform resources
 	cd terraform && terraform destroy -auto-approve
 
 run: ## Run the FastAPI dev server
-	uv run fastapi dev main.py
+	uv run fastapi dev app/main.py
 
 fmt: ## Format code
 	uv run ruff format .

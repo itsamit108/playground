@@ -42,3 +42,12 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "W", "UP"]
+
+# Point ty (and other tools) at this project's virtualenv so imports resolve
+# correctly even when the type checker is launched from a parent workspace.
+[tool.ty.environment]
+python = ".venv"
+python-version = "3.12"
+
+[tool.ty.src]
+exclude = [".venv"]

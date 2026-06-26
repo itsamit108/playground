@@ -1,0 +1,9 @@
+# Config for loose scratch files directly under dev/python (e.g. main.py).
+# Each subproject below is its OWN ty project (it pins its own .venv via
+# [tool.ty] in its pyproject.toml), so exclude them here to avoid double-checking.
+[src]
+exclude = ["deep_dive", "overtake", "fastapi_cloud_demo", "localstack_bedrock_demo"]
+
+[rules]
+# Loose entrypoints import third-party deps without a managed environment.
+unresolved-import = "ignore"

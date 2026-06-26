@@ -7,15 +7,27 @@ no AWS/LocalStack is needed.
 
 from __future__ import annotations
 
+import os
+
+# Force fully-offline config BEFORE app import. OS env vars take precedence over
+# the real ``.env`` file in pydantic-settings, so this guarantees an in-memory
+# SQLite DB and no AWS/LocalStack contact regardless of what ``.env`` contains.
+os.environ["DATABASE_URL"] = "sqlite://"
+os.environ.setdefault("JWT_SECRET_KEY", "test-secret")
+
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy.pool import StaticPool
 from sqlmodel import Session, SQLModel, create_engine
 
+import app.main as app_main
 from app.api.deps import storage_dep
 from app.ai.rag.vector_store import get_vector_store
+from app.core.config import get_settings
 from app.infra.db import set_engine
 from app.main import app
+
+get_settings.cache_clear()
 
 
 class FakeStorage:
@@ -35,6 +47,12 @@ class FakeStorage:
 
     def delete(self, key: str) -> None:
         self._objects.pop(key, None)
+
+
+# The lifespan calls get_storage() DIRECTLY (not via the FastAPI dependency), so
+# patch the name in app.main to avoid any real S3/boto connection (and its multi-
+# second connect timeout) during the test run.
+setattr(app_main, "get_storage", lambda settings=None: FakeStorage())
 
 
 @pytest.fixture
@@ -65,8 +83,13 @@ def clean_vector_store():
 
 @pytest.fixture
 def client(engine):
-    """TestClient with the engine set and S3 storage faked out."""
-    app.dependency_overrides[storage_dep] = lambda: FakeStorage()
+    """TestClient with the engine set and S3 storage faked out.
+
+    A SINGLE FakeStorage instance is shared across all requests in the test so
+    an upload and a later download see the same in-memory objects.
+    """
+    fake_storage = FakeStorage()
+    app.dependency_overrides[storage_dep] = lambda: fake_storage
     with TestClient(app) as c:
         yield c
     app.dependency_overrides.clear()

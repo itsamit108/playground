@@ -39,7 +39,8 @@ async def run_agent(
 
     llm = get_llm_client(settings)
     agent = NotesOrganizerAgent(llm, top_k=top_k or settings.rag_top_k)
-    state = AgentState(user_id=user.id, task=task)  # type: ignore[arg-type]
+    assert user.id is not None  # PK is populated once the row is persisted
+    state = AgentState(user_id=user.id, task=task)
 
     with span("agent.run", user_id=user.id):
         await agent.run(state)

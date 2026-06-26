@@ -40,4 +40,5 @@ def authenticate(
     user = session.exec(select(User).where(col(User.username) == username)).first()
     if not user or not verify_password(password, user.hashed_password):
         raise AuthError("Invalid credentials")
-    return create_access_token(user.id, settings)  # type: ignore[arg-type]
+    assert user.id is not None  # PK is populated once the row is persisted
+    return create_access_token(user.id, settings)

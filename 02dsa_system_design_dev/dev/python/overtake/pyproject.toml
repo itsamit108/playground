@@ -14,6 +14,8 @@ dependencies = [
     "python-multipart>=0.0.18,<0.0.19",
     "boto3>=1.35.0,<2.0.0",
     "python-dotenv>=1.0.1,<2.0.0",
+    "pydantic-settings>=2.14.2",
+    "email-validator>=2.3.0",
 ]
 
 [dependency-groups]
@@ -25,3 +27,12 @@ dev = [
 
 [tool.uv]
 package = false
+
+# Point ty (and other tools) at this project's virtualenv so imports resolve
+# correctly even when the type checker is launched from a parent workspace.
+[tool.ty.environment]
+python = ".venv"
+python-version = "3.12"
+
+[tool.ty.src]
+exclude = [".venv", "terraform"]

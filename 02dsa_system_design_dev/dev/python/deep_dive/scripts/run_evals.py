@@ -7,10 +7,16 @@ Usage:
 from __future__ import annotations
 
 import asyncio
+import sys
+from pathlib import Path
 
-from app.ai.models.factory import get_llm_client
-from app.core.config import get_settings
-from app.services.eval_service import EvalService
+# Make `app` importable when run directly (`python scripts/run_evals.py`); the
+# project uses package=false so `app` is not installed into the environment.
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from app.ai.models.factory import get_llm_client  # noqa: E402
+from app.core.config import get_settings  # noqa: E402
+from app.services.eval_service import EvalService  # noqa: E402
 
 
 async def main() -> int:

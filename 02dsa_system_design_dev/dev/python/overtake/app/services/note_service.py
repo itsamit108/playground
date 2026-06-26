@@ -28,35 +28,39 @@ def get_owned_note(session: Session, note_id: int, user: User) -> Note:
     return note
 
 
+def _attachment_to_response(a: Attachment) -> AttachmentResponse:
+    assert a.id is not None  # PK is populated once the row is persisted
+    return AttachmentResponse(
+        id=a.id,
+        filename=a.filename,
+        content_type=a.content_type,
+        size_bytes=a.size_bytes,
+        uploaded_at=a.uploaded_at,
+    )
+
+
 def to_response(session: Session, note: Note) -> NoteResponse:
     """Serialize a Note (with attachments) into a NoteResponse."""
+    assert note.id is not None  # PK is populated once the row is persisted
     attachments = session.exec(
         select(Attachment).where(col(Attachment.note_id) == note.id)
     ).all()
     return NoteResponse(
-        id=note.id,  # type: ignore[arg-type]
+        id=note.id,
         title=note.title,
         content=note.content,
         is_pinned=note.is_pinned,
         created_at=note.created_at,
         updated_at=note.updated_at,
-        attachments=[
-            AttachmentResponse(
-                id=a.id,  # type: ignore[arg-type]
-                filename=a.filename,
-                content_type=a.content_type,
-                size_bytes=a.size_bytes,
-                uploaded_at=a.uploaded_at,
-            )
-            for a in attachments
-        ],
+        attachments=[_attachment_to_response(a) for a in attachments],
     )
 
 
 def _index(note: Note) -> None:
+    assert note.id is not None  # PK is populated once the row is persisted
     Retriever().index_note(
         user_id=note.user_id,
-        note_id=note.id,  # type: ignore[arg-type]
+        note_id=note.id,
         title=note.title,
         content=note.content,
     )
@@ -134,7 +138,8 @@ def delete_note(
     ).all()
     for att in attachments:
         storage.delete(att.s3_key)
-    Retriever().remove_note(note.id)  # type: ignore[arg-type]
+    assert note.id is not None  # PK is populated once the row is persisted
+    Retriever().remove_note(note.id)
     session.delete(note)
     session.commit()
 
@@ -148,9 +153,10 @@ def reindex_user_notes(session: Session, user: User) -> tuple[int, int]:
     retriever = Retriever()
     total_chunks = 0
     for note in notes:
+        assert note.id is not None  # PK is populated once the row is persisted
         total_chunks += retriever.index_note(
             user_id=note.user_id,
-            note_id=note.id,  # type: ignore[arg-type]
+            note_id=note.id,
             title=note.title,
             content=note.content,
         )

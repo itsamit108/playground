@@ -1,0 +1,7 @@
+# Exploratory ML / DL / GenAI learning material.
+#
+# The notebooks here pull in data-science libraries (numpy, pandas, scikit-learn,
+# matplotlib, mlxtend, ...) that are not installed as a managed project/venv, so
+# type-checking them only produces noise. Exclude notebooks from ty.
+[src]
+exclude = ["**/*.ipynb"]

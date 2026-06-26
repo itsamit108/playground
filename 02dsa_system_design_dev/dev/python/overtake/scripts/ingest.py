@@ -26,9 +26,10 @@ def main() -> None:
     with Session(get_engine()) as session:
         notes = session.exec(select(Note)).all()
         for note in notes:
+            assert note.id is not None  # PK is populated once the row is persisted
             total_chunks += retriever.index_note(
                 user_id=note.user_id,
-                note_id=note.id,  # type: ignore[arg-type]
+                note_id=note.id,
                 title=note.title,
                 content=note.content,
             )

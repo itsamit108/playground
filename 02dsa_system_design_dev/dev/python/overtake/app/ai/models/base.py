@@ -33,6 +33,11 @@ class Message(TypedDict):
     content: str
 
 
-def msg(role: Role, content: str) -> Message:
-    """Build a chat message dict."""
+def msg(role: str, content: str) -> dict[str, Any]:
+    """Build a chat message dict (the exact shape `LLMClient.generate` consumes).
+
+    Returns a plain ``dict[str, Any]`` so lists of messages satisfy the
+    ``Sequence[dict[str, Any]]`` contract (a ``TypedDict`` is not assignable to
+    it under strict typing).
+    """
     return {"role": role, "content": content}

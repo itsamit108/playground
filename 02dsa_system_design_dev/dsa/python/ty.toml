@@ -1,0 +1,4 @@
+# Loose DSA practice/scratch files. They occasionally import third-party deps
+# without a managed environment, so don't treat missing imports as errors here.
+[rules]
+unresolved-import = "ignore"

@@ -7,8 +7,10 @@ The engine is created lazily from settings so tests can point at an
 in-memory SQLite database before anything connects to PostgreSQL.
 """
 
-from __future__ import annotations
-
+# NOTE: deliberately NO `from __future__ import annotations` here. SQLModel
+# resolves table relationships by evaluating the real annotation objects at class
+# definition; PEP 563 string annotations turn `list["Note"]` into the unresolved
+# string "list['Note']" and SQLAlchemy raises InvalidRequestError on mapper init.
 from datetime import datetime, timezone
 from typing import Iterator, Optional
 

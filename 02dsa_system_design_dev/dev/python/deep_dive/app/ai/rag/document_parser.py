@@ -17,6 +17,7 @@ import re
 import tempfile
 import uuid
 from pathlib import Path
+from typing import Any, cast
 
 from app.core.logging import get_logger
 from app.schemas.agents import BookMetadata, Chapter, ParsedPage
@@ -66,7 +67,9 @@ def parse_pdf_llama(
 
     result = client.parsing.parse(
         file_id=file_id,
-        tier=tier,
+        # llama-cloud types `tier` as a Literal/enum; we accept a plain str from
+        # config (valid at runtime). cast keeps this type-checker-agnostic.
+        tier=cast(Any, tier),
         version="latest",
         disable_cache=True,
         expand=["markdown", "images_content_metadata"],

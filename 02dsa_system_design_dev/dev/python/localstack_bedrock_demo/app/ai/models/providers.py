@@ -97,8 +97,14 @@ class BedrockProvider:
         return self._runtime
 
     def control_plane_client(self):
-        """Return a boto3 ``bedrock`` control-plane client (for tools)."""
+        """Return a boto3 ``bedrock`` control-plane client (for tools).
+
+        Configured to FAIL FAST (single attempt, short timeouts) so that when
+        LocalStack/Bedrock is down, the reachability probe and the ``list_models``
+        tool degrade in ~a few seconds instead of retrying for ~30s.
+        """
         import boto3
+        from botocore.config import Config
 
         s = self._settings
         return boto3.client(
@@ -107,6 +113,11 @@ class BedrockProvider:
             region_name=s.aws_region,
             aws_access_key_id=s.aws_access_key_id,
             aws_secret_access_key=s.aws_secret_access_key,
+            config=Config(
+                retries={"max_attempts": 1},
+                connect_timeout=s.bedrock_connect_timeout,
+                read_timeout=s.bedrock_connect_timeout,
+            ),
         )
 
     # ── contract ─────────────────────────────────────────────────

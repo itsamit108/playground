@@ -9,7 +9,7 @@
 from __future__ import annotations
 
 import asyncio
-from typing import Any, Sequence
+from typing import Any, Sequence, cast
 
 from app.core.exceptions import ProviderError
 from app.core.logging import get_logger
@@ -136,7 +136,9 @@ class GeminiProvider:
         def _call() -> str:
             resp = self._client.models.generate_content(
                 model=model or self._default_model,
-                contents=contents,
+                # google-genai types `contents` as a wide union; a list[Content]
+                # is valid at runtime. cast keeps this type-checker-agnostic.
+                contents=cast(Any, contents),
                 config=config,
             )
             return resp.text or ""
